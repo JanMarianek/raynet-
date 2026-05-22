@@ -12,6 +12,6 @@ type Story = StoryObj<typeof meta>;
 
 export const LoadedData: Story = {
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText('CRM implementation')).toBeVisible();
+    await expect(await canvas.findByText('Žebříček nejlepších')).toBeVisible();
   },
 };
