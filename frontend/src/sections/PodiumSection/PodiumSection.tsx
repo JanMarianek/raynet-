@@ -77,7 +77,7 @@ export function PodiumSection({ players }: PodiumSectionProps) {
                 <p className="mt-1 text-base text-slate-400">{player.team}</p>
               </div>
 
-              <div className="rounded-3xl bg-slate-950/65 p-4 ring-1 ring-white/5">
+              <div className="rounded-3xl bg-bg-dark/65 p-4 ring-1 ring-white/5">
                 <div className="mb-3 flex items-center justify-between">
                   <p className="text-sm text-slate-400">Vývoj pořadí</p>
                   <p className="text-xs font-semibold text-slate-500">
