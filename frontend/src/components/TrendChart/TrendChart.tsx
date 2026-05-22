@@ -1,14 +1,21 @@
 type TrendChartProps = {
   history: number[];
   large?: boolean;
+  fullWidth?: boolean;
+  maxRank?: number;
 };
 
-export function TrendChart({ history, large = false }: TrendChartProps) {
-  const width = large ? 320 : 160;
-  const height = large ? 90 : 42;
-  const padding = 6;
+export function TrendChart({
+  history,
+  large = false,
+  fullWidth = false,
+  maxRank = 10,
+}: TrendChartProps) {
+  const width = fullWidth ? 400 : large ? 320 : 160;
+  const height = fullWidth ? 300 : large ? 90 : 42;
+  const padding = fullWidth ? 18 : 6;
   const minRank = 1;
-  const maxRank = 10;
+  const safeMaxRank = Math.max(maxRank, minRank + 1);
 
   const points = history.map((value, index) => {
     const x =
@@ -16,7 +23,7 @@ export function TrendChart({ history, large = false }: TrendChartProps) {
 
     const y =
       padding +
-      ((value - minRank) / (maxRank - minRank)) * (height - padding * 2);
+      ((value - minRank) / (safeMaxRank - minRank)) * (height - padding * 2);
 
     return { x, y };
   });
@@ -26,13 +33,13 @@ export function TrendChart({ history, large = false }: TrendChartProps) {
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
-      className={`w-full ${large ? "h-24" : "h-12"}`}
+      className={`w-full ${fullWidth ? "aspect-[4/3] h-auto" : large ? "h-24" : "h-12"}`}
       fill="none"
     >
       <path
         d={`M ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}`}
         stroke="#A3E635"
-        strokeWidth={large ? 3 : 2.5}
+        strokeWidth={fullWidth ? 4 : large ? 3 : 2.5}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -42,16 +49,16 @@ export function TrendChart({ history, large = false }: TrendChartProps) {
           key={index}
           cx={p.x}
           cy={p.y}
-          r={large ? 3.5 : 2.5}
+          r={fullWidth ? 2.25 : large ? 3.5 : 2.5}
           fill={index === points.length - 1 ? "#A3E635" : "#94A3B8"}
         />
       ))}
 
-      {large && last && (
+      {(large || fullWidth) && last && (
         <circle
           cx={last.x}
           cy={last.y}
-          r={5}
+          r={fullWidth ? 6 : 5}
           fill="#A3E635"
           stroke="#020617"
           strokeWidth="2"

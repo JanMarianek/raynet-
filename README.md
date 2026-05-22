@@ -1,5 +1,7 @@
 # Raynet Internship Project
 
+![Raynet](frontend/public/Raynet.jpg)
+
 ## Wi-Fi
 
 - SSID: RAYNET-guest

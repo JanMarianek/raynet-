@@ -1,11 +1,5 @@
-import { TrendChart } from "../../components/TrendChart/TrendChart";
 import type { Player } from "../../data/leaderboard";
-import {
-  formatCurrency,
-  getInitials,
-  trendColor,
-  trendText,
-} from "../../utils/leaderboard";
+import { RankingTableRow } from "../../components/RankingTableRow/RankingTableRow";
 
 type RankingTableSectionProps = {
   players: Player[];
@@ -48,48 +42,7 @@ export function RankingTableSection({ players }: RankingTableSectionProps) {
             )}
 
             {players.map((player) => (
-              <tr key={player.rank} className="transition hover:bg-white/[0.05]">
-                <td className="px-6 py-5">
-                  <span className="grid h-11 w-11 place-items-center rounded-2xl bg-slate-900 font-black text-lime-300 ring-1 ring-white/10">
-                    {player.rank}
-                  </span>
-                </td>
-
-                <td className="px-6 py-5">
-                  <div className="flex items-center gap-4">
-                    <div className="grid h-14 w-14 place-items-center rounded-[1.25rem] bg-white/10 text-lg font-black">
-                      {getInitials(player.name)}
-                    </div>
-                    <div>
-                      <p className="font-bold text-white">{player.name}</p>
-                      <p className="text-sm text-slate-500">
-                        #{player.rank} v pořadí
-                      </p>
-                    </div>
-                  </div>
-                </td>
-
-                <td className="px-6 py-5 text-slate-300">{player.team}</td>
-
-                <td className="px-6 py-5">
-                  <div className="w-[170px]">
-                    <TrendChart history={player.history} />
-                    <p
-                      className={`mt-2 text-xs font-semibold ${trendColor(
-                        player.history,
-                      )}`}
-                    >
-                      {trendText(player.history)}
-                    </p>
-                  </div>
-                </td>
-
-                <td className="px-6 py-5 text-slate-300">{player.deals}</td>
-
-                <td className="px-6 py-5 font-bold">
-                  {formatCurrency(player.revenue)}
-                </td>
-              </tr>
+              <RankingTableRow key={player.rank} player={player} />
             ))}
           </tbody>
         </table>
