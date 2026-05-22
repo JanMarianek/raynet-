@@ -23,7 +23,7 @@ export const Default: Story = {
     players: rest,
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText('Pořadí 4.–10.')).toBeVisible();
+    await expect(canvas.getByText('Další pořadí')).toBeVisible();
     await expect(canvas.getByText('Lucie Králová')).toBeVisible();
   },
 };
@@ -31,5 +31,11 @@ export const Default: Story = {
 export const ShortList: Story = {
   args: {
     players: rest.slice(0, 3),
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    players: [],
   },
 };
