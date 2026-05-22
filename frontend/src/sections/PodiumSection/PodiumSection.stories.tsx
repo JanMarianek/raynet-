@@ -1,35 +1,36 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
-import { topThree } from '../../data/leaderboard';
-import { PodiumSection } from './PodiumSection';
+import type { Player } from "../../data/leaderboard";
+import { FirstPlaceCard } from "./FirstPlaceCard";
+import { SecondPlaceCard } from "./SecondPlaceCard";
+import { ThirdPlaceCard } from "./ThirdPlaceCard";
 
-const meta = {
-  component: PodiumSection,
-  tags: ['ai-generated'],
-  decorators: [
-    (Story) => (
-      <div className="bg-bg-dark p-6 text-slate-100">
-        <Story />
-      </div>
-    ),
-  ],
-} satisfies Meta<typeof PodiumSection>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    players: topThree,
-  },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('Vítěz')).toBeVisible();
-    await expect(canvas.getByText('Jan Zámostný')).toBeVisible();
-  },
+type PodiumSectionProps = {
+  players: Player[];
 };
 
-export const TwoPlayers: Story = {
-  args: {
-    players: topThree.slice(0, 2),
-  },
-};
+export function PodiumSection({ players }: PodiumSectionProps) {
+  const firstPlace = players.find((player) => player.rank === 1);
+  const secondPlace = players.find((player) => player.rank === 2);
+  const thirdPlace = players.find((player) => player.rank === 3);
+
+  return (
+    <section className="mb-8 grid gap-5 lg:grid-cols-3 lg:items-end">
+      {firstPlace && (
+        <div className="order-1 lg:order-2">
+          <FirstPlaceCard player={firstPlace} />
+        </div>
+      )}
+
+      {secondPlace && (
+        <div className="order-2 lg:order-1">
+          <SecondPlaceCard player={secondPlace} />
+        </div>
+      )}
+
+      {thirdPlace && (
+        <div className="order-3 lg:order-3">
+          <ThirdPlaceCard player={thirdPlace} />
+        </div>
+      )}
+    </section>
+  );
+}
